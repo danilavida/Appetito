@@ -10,7 +10,7 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Fastfood
-import androidx.compose.material.icons.filled.Icecream
+import androidx.compose.material.icons.filled.Layers
 import androidx.compose.material.icons.filled.LocalDrink
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,7 +40,7 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: Str
     // Variables
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Comidas", "Bebidas", "Complementos")
-    val icons = listOf(Icons.Default.Fastfood, Icons.Default.LocalDrink, Icons.Default.Icecream)
+    val icons = listOf(Icons.Default.Fastfood, Icons.Default.LocalDrink, Icons.Default.Layers)
     val comidas = listOf(
         MenuItem("Comida A", "$10"),
         MenuItem("Comida B", "$12"),
