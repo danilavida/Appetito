@@ -4,11 +4,13 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 
-//val navController = rememberNavController()
+
 @Composable
 fun AppNavigation(navController: NavHostController) {
+    val navController = rememberNavController()
     NavHost(navController = navController, startDestination = "main"){
         composable("main"){
             MainScreen(
@@ -28,7 +30,7 @@ fun AppNavigation(navController: NavHostController) {
             arguments = listOf(navArgument("restaurantName") { defaultValue = "Sin nombre" })
         ) { backStackEntry ->
             val restaurantName = backStackEntry.arguments?.getString("restaurantName") ?: "Sin nombre"
-            RestaurantDetailScreen(restaurantName = restaurantName)
+            RestaurantDetailScreen(navController = navController, restaurantName = restaurantName)
         }
     }
 }
