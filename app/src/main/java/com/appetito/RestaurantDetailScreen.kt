@@ -1,10 +1,14 @@
 package com.appetito
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Fastfood
+import androidx.compose.material.icons.filled.Icecream
+import androidx.compose.material.icons.filled.LocalDrink
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -22,11 +26,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: String) {
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Comidas", "Bebidas", "Complementos")
+    val icons = listOf(Icons.Default.Fastfood, Icons.Default.LocalDrink, Icons.Default.Icecream)
 
     Scaffold(
         topBar = {
@@ -66,7 +72,12 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: Str
                     Tab(
                         selected = selectedTabIndex == index,
                         onClick = { selectedTabIndex = index },
-                        text = { Text(text = title) }
+                        text = {
+                            Row {
+                                Icon(imageVector = icons[index], contentDescription = null)
+                                Text(text = title, modifier = Modifier.padding(start = 8.dp))
+                           }
+                        }
                     )
                 }
             }
