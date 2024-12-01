@@ -2,10 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
-
-//    val room_version = "2.6.1"
-//    id("androidx.room") version "$room_version" apply false
-//    id("com.google.devtools.ksp")
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -41,9 +38,6 @@ android {
     buildFeatures {
         compose = true
     }
-//    room {
-//        schemaDirectory("$projectDir/schemas")
-//    }
 }
 
 dependencies {
@@ -54,10 +48,10 @@ dependencies {
 
     val room_version = "2.6.1"
 
-//    implementation("androidx.room:room-runtime:$room_version")
-//    ksp("androidx.room:room-compiler:$room_version")
-//    // Opcional - Soporte para Kotlin Coroutines
-//    implementation("androidx.room:room-ktx:$room_version")
+    implementation("androidx.room:room-runtime:$room_version")
+    ksp("androidx.room:room-compiler:$room_version")
+    // Opcional - Soporte para Kotlin Coroutines
+    implementation("androidx.room:room-ktx:$room_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
