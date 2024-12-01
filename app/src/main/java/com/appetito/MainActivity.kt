@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
@@ -64,7 +65,7 @@ fun MainScreen(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Restaurantes")},
+                title = { Text(text = "Restaurantes") },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -81,13 +82,16 @@ fun MainScreen(
                 }
             )
         },
-        modifier = Modifier.fillMaxSize()
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.background)
     ) { innerPadding ->
         LazyColumn(
             contentPadding = PaddingValues(16.dp),
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .background(MaterialTheme.colorScheme.background)
         ) {
             items(restaurantList) { restaurant ->
                 RestaurantItem(
@@ -109,7 +113,12 @@ fun RestaurantItem(
             .fillMaxWidth()
             .padding(vertical = 8.dp)
             .clickable { onClick() },
-        elevation = CardDefaults.cardElevation(4.dp)
+        elevation = CardDefaults.cardElevation(6.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        ),
+        shape = MaterialTheme.shapes.medium
 
     ) {
         Text(
@@ -134,4 +143,9 @@ fun MainScreenPreview() {
             onRestaurantClick = {}
         )
     }
+}
+
+@Composable
+fun RestaurantDetailScreen(restaurantName: String) {
+    
 }
