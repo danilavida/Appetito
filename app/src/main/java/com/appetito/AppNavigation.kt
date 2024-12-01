@@ -32,5 +32,20 @@ fun AppNavigation(navController: NavHostController) {
             val restaurantName = backStackEntry.arguments?.getString("restaurantName") ?: "Sin nombre"
             RestaurantDetailScreen(navController = navController, restaurantName = restaurantName)
         }
+        composable(
+            route = "menuDetail/{menuItemName}/{menuItemPrice}",
+            arguments = listOf(
+                navArgument("menuItemName") { defaultValue = "Sin nombre" },
+                navArgument("menuItemPrice") { defaultValue = "Sin precio" }
+            )
+        ) { backStackEntry ->
+            val menuItemName = backStackEntry.arguments?.getString("menuItemName") ?: "Sin nombre"
+            val menuItemPrice = backStackEntry.arguments?.getString("menuItemPrice") ?: "Sin precio"
+            MenuItemDetailScreen(
+                navController = navController,
+                menuItem = MenuItem(name = menuItemName, price = menuItemPrice)
+            )
+
+        }
     }
 }

@@ -1,9 +1,7 @@
 package com.appetito
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -110,19 +108,26 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: Str
                 }
             }
             when (selectedTabIndex) {
-                0 -> MenuList(menuItems = comidas)
-                1 -> MenuList(menuItems = bebidas)
-                2 -> MenuList(menuItems = complementos)
+                0 -> MenuList(menuItems = comidas, onItemClick = { menuItem ->
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
+                })
+                1 -> MenuList(menuItems = bebidas, onItemClick = { menuItem ->
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
+                })
+                2 -> MenuList(menuItems = complementos, onItemClick = { menuItem ->
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
+                })
+
             }
         }
     }
 }
 
 @Composable
-fun MenuList(menuItems: List<MenuItem>) {
+fun MenuList(menuItems: List<MenuItem>, onItemClick: (MenuItem) -> Unit) {
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(menuItems) { item ->
-            MenuItemCard(item = item)
+            MenuItemCard(item = item, onClick = { onItemClick(item)})
         }
     }
 }
