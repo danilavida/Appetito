@@ -122,14 +122,8 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: Str
 fun MenuList(menuItems: List<MenuItem>) {
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(menuItems) { item ->
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(vertical = 8.dp)
-            ) {
-                Text(text = item.name, modifier = Modifier.weight(1f))
-                Text(text = item.price)
-            }
+            MenuItemCard(item = item)
         }
     }
 }
+
