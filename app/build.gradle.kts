@@ -2,6 +2,10 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+//    val room_version = "2.6.1"
+//    id("androidx.room") version "$room_version" apply false
+//    id("com.google.devtools.ksp")
 }
 
 android {
@@ -37,13 +41,23 @@ android {
     buildFeatures {
         compose = true
     }
+//    room {
+//        schemaDirectory("$projectDir/schemas")
+//    }
 }
 
 dependencies {
     val nav_version = "2.8.4"
 
     implementation("androidx.navigation:navigation-compose:$nav_version")
-    implementation("androidx.compose.material:material-icons-extended:1.7.5")
+    implementation(libs.androidx.material.icons.extended)
+
+    val room_version = "2.6.1"
+
+//    implementation("androidx.room:room-runtime:$room_version")
+//    ksp("androidx.room:room-compiler:$room_version")
+//    // Opcional - Soporte para Kotlin Coroutines
+//    implementation("androidx.room:room-ktx:$room_version")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
