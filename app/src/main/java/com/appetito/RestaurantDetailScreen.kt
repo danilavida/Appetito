@@ -1,8 +1,12 @@
 package com.appetito
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Fastfood
@@ -26,13 +30,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 
+data class MenuItem(val name: String, val price: String)
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: String) {
+
+    // Variables
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Comidas", "Bebidas", "Complementos")
     val icons = listOf(Icons.Default.Fastfood, Icons.Default.LocalDrink, Icons.Default.Icecream)
+    val comidas = listOf(
+        MenuItem("Comida A", "$10"),
+        MenuItem("Comida B", "$12"),
+        MenuItem("Comida C", "$8"),
+        MenuItem("Comida D", "$15")
+    )
+
+    val bebidas = listOf(
+        MenuItem("Bebida A", "$5"),
+        MenuItem("Bebida B", "$6"),
+        MenuItem("Bebida C", "$4"),
+        MenuItem("Bebida D", "$7")
+    )
+
+    val complementos = listOf(
+        MenuItem("Complemento A", "$3"),
+        MenuItem("Complemento B", "$4"),
+        MenuItem("Complemento C", "$2"),
+        MenuItem("Complemento D", "$5")
+    )
 
     Scaffold(
         topBar = {
@@ -82,9 +110,25 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: Str
                 }
             }
             when (selectedTabIndex) {
-                0 -> Text("Contenido de Comidas", modifier = Modifier.padding(16.dp))
-                1 -> Text("Contenido de Bebidas", modifier = Modifier.padding(16.dp))
-                2 -> Text("Contenido de Complementos", modifier = Modifier.padding(16.dp))
+                0 -> MenuList(menuItems = comidas)
+                1 -> MenuList(menuItems = bebidas)
+                2 -> MenuList(menuItems = complementos)
+            }
+        }
+    }
+}
+
+@Composable
+fun MenuList(menuItems: List<MenuItem>) {
+    LazyColumn(modifier = Modifier.padding(16.dp)) {
+        items(menuItems) { item ->
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(vertical = 8.dp)
+            ) {
+                Text(text = item.name, modifier = Modifier.weight(1f))
+                Text(text = item.price)
             }
         }
     }
