@@ -23,17 +23,21 @@ fun AppNavigation(navController: NavHostController) {
             RestaurantDetailScreen(navController, restaurantId)
         }
         composable(
-            route = "menuDetail/{menuItemName}/{menuItemPrice}/{menuItemDescription}",
+            route = "menuDetail/{menuItemName}/{menuItemPrice}/{menuItemDescription}/{menuItemImageResId}",
             arguments = listOf(
                 navArgument("menuItemName") { type = NavType.StringType },
                 navArgument("menuItemPrice") { type = NavType.StringType },
-                navArgument("menuItemDescription") { type = NavType.StringType }
+                navArgument("menuItemDescription") { type = NavType.StringType },
+                navArgument("menuItemImageResId") { type = NavType.IntType}
             )
         ) { backStackEntry ->
             val menuItemName = backStackEntry.arguments?.getString("menuItemName") ?: "Sin nombre"
             val menuItemPrice = backStackEntry.arguments?.getString("menuItemPrice") ?: "Sin precio"
             val menuItemDescription =
                 backStackEntry.arguments?.getString("menuItemDescription") ?: "Sin descripción"
+            val menuItemImageResId =
+                backStackEntry.arguments?.getInt("menuItemImageResId") ?: R.drawable.logo
+
             MenuItemDetailScreen(
                 navController,
                 MenuItem(
@@ -41,7 +45,8 @@ fun AppNavigation(navController: NavHostController) {
                     id = 0,
                     restaurantId = 0,
                     description = menuItemDescription,
-                    type = "comida"
+                    type = "comida",
+                    imageResId = menuItemImageResId
                 )
             )
 

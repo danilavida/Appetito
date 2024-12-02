@@ -48,7 +48,8 @@ class MainActivity : ComponentActivity() {
                         name = "Chilaquiles Verdes o Rojos",
                         price = "$223.20",
                         description = "Chilaquiles Verdes o Rojos con Pechuga de Pollo o Arrachera, Crema y Queso",
-                        type = "comida"
+                        type = "comida",
+                        imageResId = R.drawable.r1_comida1
                     )
                 )
                 menuItemDao.insertMenuItem(
@@ -57,7 +58,8 @@ class MainActivity : ComponentActivity() {
                         name = "Comida A2",
                         price = "$11",
                         description = "Descripción Comida A2",
-                        type = "comida"
+                        type = "comida",
+                        imageResId = R.drawable.r1_comida1
                     )
                 )
                 menuItemDao.insertMenuItem(
@@ -66,7 +68,8 @@ class MainActivity : ComponentActivity() {
                         name = "Comida A3",
                         price = "$13",
                         description = "Descripción Comida A3",
-                        type = "comida"
+                        type = "comida",
+                        imageResId = R.drawable.r1_comida1
                     )
                 )
                 menuItemDao.insertMenuItem(
@@ -75,7 +78,9 @@ class MainActivity : ComponentActivity() {
                         name = "Bebida A1",
                         price = "$5",
                         description = "Descripción Bebida A1",
-                        type = "bebida"
+                        type = "bebida",
+                        imageResId = R.drawable.r1_comida1
+
                     )
                 )
                 // Agrega más items para Restaurante A
@@ -87,7 +92,8 @@ class MainActivity : ComponentActivity() {
                         name = "Comida B1",
                         price = "$12",
                         description = "Descripción Comida B1",
-                        type = "comida"
+                        type = "comida",
+                        imageResId = R.drawable.r1_comida1
                     )
                 )
                 menuItemDao.insertMenuItem(
@@ -96,7 +102,8 @@ class MainActivity : ComponentActivity() {
                         name = "Bebida B1",
                         price = "$6",
                         description = "Descripción Bebida B1",
-                        type = "bebida"
+                        type = "bebida",
+                        imageResId = R.drawable.r1_comida1
                     )
                 )
                 // Agrega más items para Restaurante B

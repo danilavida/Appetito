@@ -1,6 +1,6 @@
 package com.appetito.data.entities
 
-import android.renderscript.Type
+//import android.renderscript.Type
 import androidx.room.Entity
 import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
@@ -20,5 +20,6 @@ data class MenuItem(
     val name: String,
     val price: String,
     val description: String,
-    val type: String
+    val type: String,
+    val imageResId: Int
 )

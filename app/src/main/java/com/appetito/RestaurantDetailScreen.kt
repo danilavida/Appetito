@@ -108,13 +108,13 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) 
             }
             when (selectedTabIndex) {
                 0 -> MenuList(menuItems = comidas, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}")
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
                 })
                 1 -> MenuList(menuItems = bebidas, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
                 })
                 2 -> MenuList(menuItems = complementos, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}")
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
                 })
 
             }
