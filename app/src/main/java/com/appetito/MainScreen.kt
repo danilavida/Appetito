@@ -17,17 +17,31 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.appetito.ui.theme.AppetitoTheme
+import androidx.navigation.NavController
+import com.appetito.data.database.DatabaseInstance
+import com.appetito.data.entities.Restaurant
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(
-    restaurantList: List<String>,
-    onRestaurantClick: (String) -> Unit
-) {
+fun MainScreen(navController: NavController) {
+    val context = LocalContext.current
+    val restaurantDao = remember { DatabaseInstance.getDatabase(context).restaurantDao() }
+    var restaurantList by remember { mutableStateOf(emptyList<Restaurant>()) }
+
+    LaunchedEffect(Unit) {
+        restaurantList = withContext(Dispatchers.IO) {
+            restaurantDao.getAllRestaurants()
+        }
+    }
     Scaffold(
         topBar = {
             TopAppBar(
@@ -60,27 +74,11 @@ fun MainScreen(
                 .background(MaterialTheme.colorScheme.background)
         ) {
             items(restaurantList) { restaurant ->
-                RestaurantItem(
-                    name = restaurant,
-                    onClick = { onRestaurantClick(restaurant) }
+                RestaurantItem (
+                    name = restaurant.name,
+                    onClick = { navController.navigate("detail/${restaurant.id}") }
                 )
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun MainScreenPreview() {
-    AppetitoTheme {
-        MainScreen(
-            restaurantList = listOf(
-                "Restaurante A",
-                "Restaurante B",
-                "Restaurante C",
-                "Restaurante D"
-            ),
-            onRestaurantClick = {}
-        )
     }
 }

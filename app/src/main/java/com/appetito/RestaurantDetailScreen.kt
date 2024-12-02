@@ -25,45 +25,66 @@ import androidx.compose.runtime.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import com.appetito.data.database.DatabaseInstance
+import com.appetito.data.entities.MenuItem
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
-data class MenuItem(val name: String, val price: String)
+//data class MenuItem(val name: String, val price: String)
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: String) {
+fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) {
+
+    val context = LocalContext.current
+    val menuItemDao = remember { DatabaseInstance.getDatabase(context).menuItemDao() }
+    var menuItems by remember { mutableStateOf(emptyList<MenuItem>()) }
+
+    LaunchedEffect(Unit) {
+        menuItems = withContext(Dispatchers.IO) {
+            menuItemDao.getMenuItemsByRestaurant(restaurantId)
+        }
+    }
+
+    // Filtrar los items según su tipo (Comidas, Bebidas, Complementos)
+    val comidas = menuItems.filter { it.type == "comida" }
+    val bebidas = menuItems.filter { it.type == "bebida" }
+    val complementos = menuItems.filter { it.type == "complemento" }
+
 
     // Variables
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Comidas", "Bebidas", "Complementos")
     val icons = listOf(Icons.Default.Fastfood, Icons.Default.LocalDrink, Icons.Default.Layers)
-    val comidas = listOf(
-        MenuItem("Comida A", "$10"),
-        MenuItem("Comida B", "$12"),
-        MenuItem("Comida C", "$8"),
-        MenuItem("Comida D", "$15")
-    )
-
-    val bebidas = listOf(
-        MenuItem("Bebida A", "$5"),
-        MenuItem("Bebida B", "$6"),
-        MenuItem("Bebida C", "$4"),
-        MenuItem("Bebida D", "$7")
-    )
-
-    val complementos = listOf(
-        MenuItem("Complemento A", "$3"),
-        MenuItem("Complemento B", "$4"),
-        MenuItem("Complemento C", "$2"),
-        MenuItem("Complemento D", "$5")
-    )
+//    val comidas = listOf(
+//        MenuItem("Comida A", "$10"),
+//        MenuItem("Comida B", "$12"),
+//        MenuItem("Comida C", "$8"),
+//        MenuItem("Comida D", "$15")
+//    )
+//
+//    val bebidas = listOf(
+//        MenuItem("Bebida A", "$5"),
+//        MenuItem("Bebida B", "$6"),
+//        MenuItem("Bebida C", "$4"),
+//        MenuItem("Bebida D", "$7")
+//    )
+//
+//    val complementos = listOf(
+//        MenuItem("Complemento A", "$3"),
+//        MenuItem("Complemento B", "$4"),
+//        MenuItem("Complemento C", "$2"),
+//        MenuItem("Complemento D", "$5")
+//    )
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = restaurantName) },
+                title = { Text(text = "Menu del Restaurante") },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -82,8 +103,6 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantName: Str
                         )
                     }
                 },
-
-
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
