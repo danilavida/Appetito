@@ -11,8 +11,8 @@ import com.appetito.data.entities.MenuItem
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = "main"){
-        composable("main"){
+    NavHost(navController = navController, startDestination = "main") {
+        composable("main") {
             MainScreen(navController)
         }
         composable(
@@ -23,21 +23,24 @@ fun AppNavigation(navController: NavHostController) {
             RestaurantDetailScreen(navController, restaurantId)
         }
         composable(
-            route = "menuDetail/{menuItemName}/{menuItemPrice}",
+            route = "menuDetail/{menuItemName}/{menuItemPrice}/{menuItemDescription}",
             arguments = listOf(
-                navArgument("menuItemName") { defaultValue = "Sin nombre" },
-                navArgument("menuItemPrice") { defaultValue = "Sin precio" }
+                navArgument("menuItemName") { type = NavType.StringType },
+                navArgument("menuItemPrice") { type = NavType.StringType },
+                navArgument("menuItemDescription") { type = NavType.StringType }
             )
         ) { backStackEntry ->
             val menuItemName = backStackEntry.arguments?.getString("menuItemName") ?: "Sin nombre"
             val menuItemPrice = backStackEntry.arguments?.getString("menuItemPrice") ?: "Sin precio"
+            val menuItemDescription =
+                backStackEntry.arguments?.getString("menuItemDescription") ?: "Sin descripción"
             MenuItemDetailScreen(
                 navController,
                 MenuItem(
                     name = menuItemName, price = menuItemPrice,
                     id = 0,
                     restaurantId = 0,
-                    description = "Descripcion del item",
+                    description = menuItemDescription,
                     type = "comida"
                 )
             )

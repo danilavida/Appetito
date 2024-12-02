@@ -32,7 +32,7 @@ class MainActivity : ComponentActivity() {
             if (restaurantDao.getAllRestaurants().isEmpty()) {
                 // Aqui se agragan los restaurantes a la Database
                 val restaurantAId =
-                    restaurantDao.insertRestaurant(Restaurant(name = "Restaurante A")).toInt()
+                    restaurantDao.insertRestaurant(Restaurant(name = "Balcón del Zócalo")).toInt()
                 val restaurantBId =
                     restaurantDao.insertRestaurant(Restaurant(name = "Restaurante B")).toInt()
                 val restaurantCId =
@@ -45,9 +45,27 @@ class MainActivity : ComponentActivity() {
                 menuItemDao.insertMenuItem(
                     MenuItem(
                         restaurantId = restaurantAId,
-                        name = "Comida A1",
-                        price = "$10",
-                        description = "Descripción Comida A1",
+                        name = "Chilaquiles Verdes o Rojos",
+                        price = "$223.20",
+                        description = "Chilaquiles Verdes o Rojos con Pechuga de Pollo o Arrachera, Crema y Queso",
+                        type = "comida"
+                    )
+                )
+                menuItemDao.insertMenuItem(
+                    MenuItem(
+                        restaurantId = restaurantAId,
+                        name = "Comida A2",
+                        price = "$11",
+                        description = "Descripción Comida A2",
+                        type = "comida"
+                    )
+                )
+                menuItemDao.insertMenuItem(
+                    MenuItem(
+                        restaurantId = restaurantAId,
+                        name = "Comida A3",
+                        price = "$13",
+                        description = "Descripción Comida A3",
                         type = "comida"
                     )
                 )

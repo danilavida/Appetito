@@ -60,26 +60,6 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) 
     var selectedTabIndex by remember { mutableIntStateOf(0) }
     val tabs = listOf("Comidas", "Bebidas", "Complementos")
     val icons = listOf(Icons.Default.Fastfood, Icons.Default.LocalDrink, Icons.Default.Layers)
-//    val comidas = listOf(
-//        MenuItem("Comida A", "$10"),
-//        MenuItem("Comida B", "$12"),
-//        MenuItem("Comida C", "$8"),
-//        MenuItem("Comida D", "$15")
-//    )
-//
-//    val bebidas = listOf(
-//        MenuItem("Bebida A", "$5"),
-//        MenuItem("Bebida B", "$6"),
-//        MenuItem("Bebida C", "$4"),
-//        MenuItem("Bebida D", "$7")
-//    )
-//
-//    val complementos = listOf(
-//        MenuItem("Complemento A", "$3"),
-//        MenuItem("Complemento B", "$4"),
-//        MenuItem("Complemento C", "$2"),
-//        MenuItem("Complemento D", "$5")
-//    )
 
     Scaffold(
         topBar = {
@@ -128,13 +108,13 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) 
             }
             when (selectedTabIndex) {
                 0 -> MenuList(menuItems = comidas, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}")
                 })
                 1 -> MenuList(menuItems = bebidas, onItemClick = { menuItem ->
                     navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
                 })
                 2 -> MenuList(menuItems = complementos, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}")
+                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}")
                 })
 
             }

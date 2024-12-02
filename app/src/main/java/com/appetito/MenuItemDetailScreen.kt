@@ -80,7 +80,7 @@ fun MenuItemDetailScreen(navController: NavHostController, menuItem: MenuItem) {
                 modifier = Modifier.padding(16.dp)
             )
             Text(
-                text = "Descripción del item",
+                text = menuItem.description,
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(16.dp)
             )
