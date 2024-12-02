@@ -405,11 +405,9 @@ object DatabaseInitializer {
                 )
 
                 // Restaurante D
-
-                // Restaurante B
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Filete de Res",
                         price = "$230.80",
                         description = "Platillo de Filete de Res a la Tampiqueña",
@@ -419,7 +417,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Lomo de Cerdo",
                         price = "$130.50",
                         description = "Lomo de Cerdo Allende, en mole de fresa",
@@ -429,7 +427,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Salmón Fresco",
                         price = "$170.90",
                         description = "Salmón Fresco Regina Servido con un espejo de mole amarillo.",
@@ -439,7 +437,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Medallon de langosta",
                         price = "$190.50",
                         description = "Medallón de Langosta Mesones y un espejo de pipían verde.",
@@ -449,7 +447,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Bebida de Limón",
                         price = "$90",
                         description = "Bebida de jugo de limón",
@@ -459,7 +457,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Bebida de Tepache",
                         price = "$98.60",
                         description = "Jugo de tepache",
@@ -469,7 +467,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Bebida de coco con piña",
                         price = "$70.90",
                         description = "Bebida de Piña con Coco",
@@ -479,7 +477,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Bebida Orchata",
                         price = "$90.15",
                         description = "Bebida de Orchata concentrada",
@@ -489,7 +487,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Guacamole",
                         price = "$49.90",
                         description = "Fresco Aguacate, Cebolla, Jitomate, Chile Serrano,Cilantro acompañado de Totopos Recien Hechos.",
@@ -500,7 +498,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Queso Fundido",
                         price = "$41.90",
                         description = "Queso fundido aompañado con Salsa de Gusano de Maguey",
@@ -510,7 +508,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Tlayuda",
                         price = "$87.99",
                         description = "Tlayuda Oaxaqueña",
@@ -521,7 +519,7 @@ object DatabaseInitializer {
                 )
                 menuItemDao.insertMenuItem(
                     MenuItem(
-                        restaurantId = restaurantBId,
+                        restaurantId = restaurantDId,
                         name = "Escamoles",
                         price = "$78.50",
                         description = "Cazuela de Escamoles",
