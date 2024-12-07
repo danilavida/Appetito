@@ -51,5 +51,8 @@ fun AppNavigation(navController: NavHostController) {
             )
 
         }
+        composable("addRestaurant") {
+            AddRestaurantScreen(navController)
+        }
     }
 }
