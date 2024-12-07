@@ -75,8 +75,9 @@ fun MainScreen(navController: NavController) {
         ) {
             items(restaurantList) { restaurant ->
                 RestaurantItem (
+                    id = restaurant.id,
                     name = restaurant.name,
-                    onClick = { navController.navigate("detail/${restaurant.id}") }
+                    navController = navController
                 )
             }
         }

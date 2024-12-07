@@ -54,5 +54,13 @@ fun AppNavigation(navController: NavHostController) {
         composable("addRestaurant") {
             AddRestaurantScreen(navController)
         }
+
+        composable(
+            route = "editRestaurant/{restaurantId}",
+            arguments = listOf(navArgument("restaurantId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val restaurantId = backStackEntry.arguments?.getInt("restaurantId") ?: 0
+            EditRestaurantScreen(navController, restaurantId)
+        }
     }
 }

@@ -33,9 +33,6 @@ import com.appetito.data.entities.MenuItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-//data class MenuItem(val name: String, val price: String)
-
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) {
