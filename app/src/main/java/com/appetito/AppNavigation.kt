@@ -28,7 +28,7 @@ fun AppNavigation(navController: NavHostController) {
                 navArgument("menuItemName") { type = NavType.StringType },
                 navArgument("menuItemPrice") { type = NavType.StringType },
                 navArgument("menuItemDescription") { type = NavType.StringType },
-                navArgument("menuItemImageResId") { type = NavType.IntType}
+                navArgument("menuItemImageResId") { type = NavType.IntType }
             )
         ) { backStackEntry ->
             val menuItemName = backStackEntry.arguments?.getString("menuItemName") ?: "Sin nombre"
@@ -62,5 +62,17 @@ fun AppNavigation(navController: NavHostController) {
             val restaurantId = backStackEntry.arguments?.getInt("restaurantId") ?: 0
             EditRestaurantScreen(navController, restaurantId)
         }
+
+        composable(
+            route = "addMenuItem/{restaurantId}/{itemType}",
+            arguments = listOf(
+                navArgument("restaurantId") { type = NavType.IntType },
+                navArgument("itemType") { type = NavType.StringType }
+            )
+            ) { backStackEntry ->
+                val restaurantId = backStackEntry.arguments?.getInt("restaurantId") ?: 0
+                val itemType = backStackEntry.arguments?.getString("itemType") ?: "item"
+                AddMenuItemScreen(navController, restaurantId, itemType)
+            }
     }
 }

@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Fastfood
 import androidx.compose.material.icons.filled.Layers
 import androidx.compose.material.icons.filled.LocalDrink
@@ -72,10 +73,17 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) 
                     }
                 },
                 actions = {
-                    IconButton(onClick = { /* Lógica para el botón de búsqueda */ }) {
+                    IconButton(onClick = {
+                        val itemType = when (selectedTabIndex) {
+                            0 -> "comida"
+                            1 -> "bebida"
+                            2 -> "complemento"
+                            else -> "item"
+                        }
+                        navController.navigate("addMenuItem/$restaurantId/$itemType") }) {
                         Icon(
-                            imageVector = Icons.Default.Search,
-                            contentDescription = "Buscar",
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "Agregar",
                             tint = MaterialTheme.colorScheme.onPrimary
                         )
                     }
