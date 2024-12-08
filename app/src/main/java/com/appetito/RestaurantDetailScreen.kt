@@ -36,7 +36,11 @@ import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) {
+fun RestaurantDetailScreen(
+    navController: NavHostController,
+    restaurantId: Int,
+    initialTabIndex: Int = 0
+) {
 
     val context = LocalContext.current
     val menuItemDao = remember { DatabaseInstance.getDatabase(context).menuItemDao() }
@@ -61,63 +65,59 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) 
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(text = "Menu del Restaurante") },
-                navigationIcon = {
-                    IconButton(onClick = { navController.popBackStack() }) {
-                        Icon(
-                            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Regresar",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
+            TopAppBar(title = { Text(text = "Menu del Restaurante") }, navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Regresar",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }, actions = {
+                IconButton(onClick = {
+                    val itemType = when (selectedTabIndex) {
+                        0 -> "comida"
+                        1 -> "bebida"
+                        2 -> "complemento"
+                        else -> "item"
                     }
-                },
-                actions = {
-                    IconButton(onClick = {
-                        val itemType = when (selectedTabIndex) {
-                            0 -> "comida"
-                            1 -> "bebida"
-                            2 -> "complemento"
-                            else -> "item"
-                        }
-                        navController.navigate("addMenuItem/$restaurantId/$itemType") }) {
-                        Icon(
-                            imageVector = Icons.Default.Add,
-                            contentDescription = "Agregar",
-                            tint = MaterialTheme.colorScheme.onPrimary
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+                    navController.navigate("addMenuItem/$restaurantId/$itemType/$selectedTabIndex")
+                }) {
+                    Icon(
+                        imageVector = Icons.Default.Add,
+                        contentDescription = "Agregar",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }, colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
             )
-        },
-        modifier = Modifier.fillMaxSize()
+            )
+        }, modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding)) {
             TabRow(selectedTabIndex = selectedTabIndex) {
                 tabs.forEachIndexed { index, title ->
-                    Tab(
-                        selected = selectedTabIndex == index,
+                    Tab(selected = selectedTabIndex == index,
                         onClick = { selectedTabIndex = index },
                         text = {
-                            Column(horizontalAlignment = Alignment.CenterHorizontally ) {
+                            Column(horizontalAlignment = Alignment.CenterHorizontally) {
                                 Icon(imageVector = icons[index], contentDescription = null)
                                 Text(text = title, modifier = Modifier.padding(start = 8.dp))
-                           }
-                        }
-                    )
+                            }
+                        })
                 }
             }
             when (selectedTabIndex) {
                 0 -> MenuList(menuItems = comidas, onItemClick = { menuItem ->
                     navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
                 })
+
                 1 -> MenuList(menuItems = bebidas, onItemClick = { menuItem ->
                     navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
                 })
+
                 2 -> MenuList(menuItems = complementos, onItemClick = { menuItem ->
                     navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
                 })
@@ -131,7 +131,7 @@ fun RestaurantDetailScreen(navController: NavHostController ,restaurantId: Int) 
 fun MenuList(menuItems: List<MenuItem>, onItemClick: (MenuItem) -> Unit) {
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(menuItems) { item ->
-            MenuItemCard(item = item, onClick = { onItemClick(item)})
+            MenuItemCard(item = item, onClick = { onItemClick(item) })
         }
     }
 }

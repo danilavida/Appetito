@@ -16,11 +16,15 @@ fun AppNavigation(navController: NavHostController) {
             MainScreen(navController)
         }
         composable(
-            route = "detail/{restaurantId}",
-            arguments = listOf(navArgument("restaurantId") { type = NavType.IntType })
+            route = "detail/{restaurantId}?selectedTabIndex={selectedTabIndex}",
+            arguments = listOf(
+                navArgument("restaurantId") { type = NavType.IntType },
+                navArgument("selectedTabIndex") { type = NavType.IntType; defaultValue = 0 }
+            )
         ) { backStackEntry ->
             val restaurantId = backStackEntry.arguments?.getInt("restaurantId") ?: 0
-            RestaurantDetailScreen(navController, restaurantId)
+            val selectedTabIndex = backStackEntry.arguments?.getInt("selectedTabIndex") ?: 0
+            RestaurantDetailScreen(navController, restaurantId, selectedTabIndex)
         }
         composable(
             route = "menuDetail/{menuItemName}/{menuItemPrice}/{menuItemDescription}/{menuItemImageResId}",
@@ -64,15 +68,17 @@ fun AppNavigation(navController: NavHostController) {
         }
 
         composable(
-            route = "addMenuItem/{restaurantId}/{itemType}",
+            route = "addMenuItem/{restaurantId}/{itemType}/{selectedTabIndex}",
             arguments = listOf(
                 navArgument("restaurantId") { type = NavType.IntType },
-                navArgument("itemType") { type = NavType.StringType }
+                navArgument("itemType") { type = NavType.StringType },
+                navArgument("selectedTabIndex") { type = NavType.IntType }
             )
             ) { backStackEntry ->
                 val restaurantId = backStackEntry.arguments?.getInt("restaurantId") ?: 0
                 val itemType = backStackEntry.arguments?.getString("itemType") ?: "item"
-                AddMenuItemScreen(navController, restaurantId, itemType)
+                val selectedTabIndex = backStackEntry.arguments?.getInt("selectedTabIndex") ?: 0
+                AddMenuItemScreen(navController, restaurantId, itemType, selectedTabIndex)
             }
     }
 }
