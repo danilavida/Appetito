@@ -4,9 +4,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
@@ -22,7 +26,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.appetito.data.dao.RestaurantDao
 import com.appetito.data.database.DatabaseInstance
 import com.appetito.data.entities.Restaurant
 import kotlinx.coroutines.Dispatchers
@@ -45,33 +48,46 @@ fun EditRestaurantScreen(navController: NavController, restaurantId: Int) {
 
     Scaffold(
         topBar = {
-            TopAppBar(
-                title = { Text(text = "Editar Restaurante") },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primary,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimary
-                )
+            TopAppBar(title = { Text(text = "Editar Restaurante") }, navigationIcon = {
+                IconButton(onClick = { navController.popBackStack() }) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+                        contentDescription = "Regresar",
+                        tint = MaterialTheme.colorScheme.onPrimary
+                    )
+                }
+            }, colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.primary,
+                titleContentColor = MaterialTheme.colorScheme.onPrimary
             )
-        },
-        modifier = Modifier.fillMaxSize()
+            )
+        }, modifier = Modifier.fillMaxSize()
     ) { innerPadding ->
-        Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
-            OutlinedTextField(
-                value = restaurantName.value,
+        Column(
+            modifier = Modifier
+                .padding(innerPadding)
+                .padding(16.dp)
+        ) {
+            OutlinedTextField(value = restaurantName.value,
                 onValueChange = { restaurantName.value = it },
                 label = { Text("Nombre del Restaurante") },
-                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(bottom = 16.dp)
             )
             Button(
                 onClick = {
                     coroutineScope.launch() {
                         withContext(Dispatchers.IO) {
-                            restaurantDao.updateRestaurant(Restaurant(id = restaurantId, name = restaurantName.value))
+                            restaurantDao.updateRestaurant(
+                                Restaurant(
+                                    id = restaurantId, name = restaurantName.value
+                                )
+                            )
                         }
                         navController.popBackStack()
                     }
-                },
-                modifier = Modifier.fillMaxWidth()
+                }, modifier = Modifier.fillMaxWidth()
             ) {
                 Text("Guardar")
             }
