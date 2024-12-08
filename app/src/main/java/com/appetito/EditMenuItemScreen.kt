@@ -13,40 +13,45 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.appetito.data.dao.RestaurantDao
 import com.appetito.data.database.DatabaseInstance
-import com.appetito.data.entities.Restaurant
+import com.appetito.data.entities.MenuItem
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EditRestaurantScreen(navController: NavController, restaurantId: Int) {
+fun EditMenuItemScreen(navController: NavController, menuItemId: Int) {
     val context = LocalContext.current
-    val restaurantDao = remember { DatabaseInstance.getDatabase(context).restaurantDao() }
-    val restaurantName = remember { mutableStateOf("") }
+    val menuItemDao = remember { DatabaseInstance.getDatabase(context).menuItemDao() }
     val coroutineScope = rememberCoroutineScope()
+    var menuItem by remember { mutableStateOf<MenuItem?>(null) }
+    var name by remember { mutableStateOf("") }
+    var price by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+    var type by remember { mutableStateOf("") }
 
-    LaunchedEffect(restaurantId) {
-        restaurantName.value = withContext(Dispatchers.IO) {
-            restaurantDao.getRestaurantById(restaurantId)?.name ?: ""
+    LaunchedEffect(menuItemId) {
+        menuItem = withContext(Dispatchers.IO) {
+            menuItemDao.getMenuItemById(menuItemId)
+        }
+        menuItem?.let {
+            name = it.name
+            price = it.price
+            description = it.description
+            type = it.type
         }
     }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(text = "Editar Restaurante") },
+                title = { Text(text = "Editar Elemento de Menú", maxLines = 1) },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.primary,
                     titleContentColor = MaterialTheme.colorScheme.onPrimary
@@ -57,21 +62,48 @@ fun EditRestaurantScreen(navController: NavController, restaurantId: Int) {
     ) { innerPadding ->
         Column(modifier = Modifier.padding(innerPadding).padding(16.dp)) {
             OutlinedTextField(
-                value = restaurantName.value,
-                onValueChange = { restaurantName.value = it },
-                label = { Text("Nombre del Restaurante") },
+                value = name,
+                onValueChange = { name = it },
+                label = { Text("Nombre") },
                 modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            )
+            OutlinedTextField(
+                value = price,
+                onValueChange = { price = it },
+                label = { Text("Precio") },
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            )
+            OutlinedTextField(
+                value = description,
+                onValueChange = { description = it },
+                label = { Text("Descripción") },
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
+            )
+            OutlinedTextField(
+                value = type,
+                onValueChange = { },
+                label = { Text("Tipo") },
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp),
+                enabled = false
             )
             Button(
                 onClick = {
-                    coroutineScope.launch() {
+                    coroutineScope.launch {
                         withContext(Dispatchers.IO) {
-                            restaurantDao.updateRestaurant(Restaurant(id = restaurantId, name = restaurantName.value))
+                            menuItem?.let {
+                                val updatedItem = it.copy(
+                                    name = name,
+                                    price = price,
+                                    description = description,
+                                    type = type
+                                )
+                                menuItemDao.updateMenuItem(updatedItem)
+                            }
                         }
                         navController.popBackStack()
                     }
                 },
-                modifier = Modifier.fillMaxWidth()
+                modifier = Modifier.fillMaxWidth().padding(bottom = 16.dp)
             ) {
                 Text("Guardar")
             }
@@ -79,7 +111,9 @@ fun EditRestaurantScreen(navController: NavController, restaurantId: Int) {
                 onClick = {
                     coroutineScope.launch {
                         withContext(Dispatchers.IO) {
-                            restaurantDao.deleteRestaurantById(restaurantId)
+                            menuItem?.let {
+                                menuItemDao.deleteMenuItem(it)
+                            }
                         }
                         navController.popBackStack()
                     }

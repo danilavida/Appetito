@@ -80,5 +80,12 @@ fun AppNavigation(navController: NavHostController) {
                 val selectedTabIndex = backStackEntry.arguments?.getInt("selectedTabIndex") ?: 0
                 AddMenuItemScreen(navController, restaurantId, itemType, selectedTabIndex)
             }
+        composable(
+            route = "editMenuItem/{menuItemId}",
+            arguments = listOf(navArgument("menuItemId") { type = NavType.IntType })
+        ) { backStackEntry ->
+            val menuItemId = backStackEntry.arguments?.getInt("menuItemId") ?: 0
+            EditMenuItemScreen(navController, menuItemId)
+        }
     }
 }

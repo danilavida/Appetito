@@ -28,6 +28,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.appetito.data.database.DatabaseInstance
 import com.appetito.data.entities.MenuItem
@@ -37,9 +38,7 @@ import kotlinx.coroutines.withContext
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RestaurantDetailScreen(
-    navController: NavHostController,
-    restaurantId: Int,
-    initialTabIndex: Int = 0
+    navController: NavHostController, restaurantId: Int, initialTabIndex: Int = 0
 ) {
 
     val context = LocalContext.current
@@ -110,17 +109,23 @@ fun RestaurantDetailScreen(
                 }
             }
             when (selectedTabIndex) {
-                0 -> MenuList(menuItems = comidas, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
-                })
+                0 -> MenuList(menuItems = comidas,
+                    navController = navController,
+                    onItemClick = { menuItem ->
+                        navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
+                    })
 
-                1 -> MenuList(menuItems = bebidas, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
-                })
+                1 -> MenuList(menuItems = bebidas,
+                    navController = navController,
+                    onItemClick = { menuItem ->
+                        navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
+                    })
 
-                2 -> MenuList(menuItems = complementos, onItemClick = { menuItem ->
-                    navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
-                })
+                2 -> MenuList(menuItems = complementos,
+                    navController = navController,
+                    onItemClick = { menuItem ->
+                        navController.navigate("menuDetail/${menuItem.name}/${menuItem.price}/${menuItem.description}/${menuItem.imageResId}")
+                    })
 
             }
         }
@@ -128,10 +133,14 @@ fun RestaurantDetailScreen(
 }
 
 @Composable
-fun MenuList(menuItems: List<MenuItem>, onItemClick: (MenuItem) -> Unit) {
+fun MenuList(
+    menuItems: List<MenuItem>, navController: NavController, onItemClick: (MenuItem) -> Unit
+) {
     LazyColumn(modifier = Modifier.padding(16.dp)) {
         items(menuItems) { item ->
-            MenuItemCard(item = item, onClick = { onItemClick(item) })
+            MenuItemCard(item = item,
+                navController = navController,
+                onClick = { onItemClick(item) })
         }
     }
 }
